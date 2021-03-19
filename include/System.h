@@ -177,6 +177,10 @@ public:
 
     void ChangeDataset();
 
+    void RunViewer();
+    void CreatePanelToViewer();
+    bool RefreshViewerWithCheckFinish();
+    void SetViewerFinish();
     //void SaveAtlas(int type);
 
 private:

@@ -48,3 +48,4 @@ cmake-build-debug/
 *.pyc
 *.osa
 settings.json
+mono_ar

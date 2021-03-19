@@ -198,7 +198,14 @@ System::System(const string &strVocFile, const string &strSettingsFile, const eS
     if(bUseViewer)
     {
         mpViewer = new Viewer(this, mpFrameDrawer,mpMapDrawer,mpTracker,strSettingsFile);
+
+#ifndef __APPLE__
         mptViewer = new thread(&Viewer::Run, mpViewer);
+#else
+        // cout << "MacOS *** Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'nextEventMatchingMask should only be called from the Main Thread!', System class RunViewer method to Main.\n"<< endl;
+        cout << "MacOS doesn't support calling OpenGL from non-main threads, mptViewer disabled.\n"<< endl;
+#endif
+
         mpTracker->SetViewer(mpViewer);
         mpLoopCloser->mpViewer = mpViewer;
         mpViewer->both = mpFrameDrawer->both;
@@ -225,7 +232,7 @@ cv::Mat System::TrackStereo(const cv::Mat &imLeft, const cv::Mat &imRight, const
     {
         cerr << "ERROR: you called TrackStereo but input sensor was not set to Stereo nor Stereo-Inertial." << endl;
         exit(-1);
-    }   
+    }
 
     // Check mode change
     {
@@ -291,7 +298,7 @@ cv::Mat System::TrackRGBD(const cv::Mat &im, const cv::Mat &depthmap, const doub
     {
         cerr << "ERROR: you called TrackRGBD but input sensor was not set to RGBD." << endl;
         exit(-1);
-    }    
+    }
 
     // Check mode change
     {
@@ -913,6 +920,31 @@ void System::ChangeDataset()
     }
 
     mpTracker->NewDataset();
+}
+
+void System::RunViewer()
+{
+    if(mpViewer)
+        mpViewer->Run();
+}
+
+void System::CreatePanelToViewer()
+{
+    if(mpViewer)
+        mpViewer->CreatePanel();
+}
+
+bool System::RefreshViewerWithCheckFinish()
+{
+    if(mpViewer)
+       return mpViewer->RefreshWithCheckFinish();
+    return false;
+}
+
+void System::SetViewerFinish()
+{
+    if(mpViewer)
+        mpViewer->SetFinish();
 }
 
 /*void System::SaveAtlas(int type){
