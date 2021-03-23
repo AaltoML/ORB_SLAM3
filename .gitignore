@@ -38,6 +38,7 @@ Thirdparty/g2o/build/
 Thirdparty/g2o/config.h
 Thirdparty/g2o/lib/
 Vocabulary/ORBvoc.txt
+Vocabulary/ORBvoc.bin
 build/
 
 lib/
@@ -47,3 +48,7 @@ cmake-build-debug/
 
 *.pyc
 *.osa
+
+settings.json
+mono_ar
+bin_vocabulary
