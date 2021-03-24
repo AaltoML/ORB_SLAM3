@@ -179,7 +179,7 @@ public:
     void InsertTrackTime(double& time);
 #endif
 
-private:
+protected:
 
     // Input sensor
     eSensor mSensor;
