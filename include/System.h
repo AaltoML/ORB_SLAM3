@@ -183,7 +183,7 @@ public:
     void SetViewerFinish();
     //void SaveAtlas(int type);
 
-private:
+protected:
 
     //bool LoadAtlas(string filename, int type);
 
